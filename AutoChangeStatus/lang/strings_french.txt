@@ -1,0 +1,32 @@
+<?php
+#Plugin Description
+$s_plugin_AutoChangeStatus_plugin_title = 'Changement automatique de statuts de bug';
+$s_plugin_AutoChangeStatus_plugin_description = 'Change automatiquement les status des bugs ';
+
+#Plugin configuration
+$s_plugin_AutoChangeStatus_title= 'Configurer le plugin AutoChangeStatus';
+$s_plugin_AutoChangeStatus_plugin_config_general_description = 'Configuration générale';
+$s_plugin_AutoChangeStatus_plugin_config_description = 'Sélectionner l\'utilisateur qui effectuera les changements de status, et l'ajout des notes. Celui-ci devrait être un administrateur';
+$s_plugin_AutoChangeStatus_change_status_user = 'Utilisateur';
+$s_plugin_AutoChangeStatus_select_user = 'Selectionner utilisateur';
+$s_plugin_AutoChangeStatus_config_action_update = 'Mettre à jour';
+$s_plugin_AutoChangeStatus_plugin_changes_list = 'Liste des changements automatiques';
+$s_plugin_AutoChangeStatus_project = 'Projet';
+$s_plugin_AutoChangeStatus_from_status = 'Statut initial';
+$s_plugin_AutoChangeStatus_to_status = 'Statut final';
+$s_plugin_AutoChangeStatus_status_days = 'Nombre de jours';
+$s_plugin_AutoChangeStatus_reminder = 'Rappel';
+$s_plugin_AutoChangeStatus_reminder_message = 'Message de rappel';
+$s_plugin_AutoChangeStatus_reminder_days = 'Nombre de jours';
+$s_plugin_AutoChangeStatus_active = 'Actif';
+$s_plugin_AutoChangeStatus_edit = 'Editer';
+$s_plugin_AutoChangeStatus_no_update_changes_created = 'Pas de changements automatiques créés';
+$s_plugin_AutoChangeStatus_create_new_status_update = 'Créer un nouveau changement';
+
+#Add new change page
+$s_plugin_AutoChangeStatus_create_new_change_description = 'Ajouter une nouveau changement automatique';
+$s_plugin_AutoChangeStatus_all_projects = 'Tous les projets';
+$s_plugin_AutoChangeStatus_yes = 'Oui';
+$s_plugin_AutoChangeStatus_no = 'Non';
+$s_plugin_AutoChangeStatus_create_change = 'Créer';
+ 
