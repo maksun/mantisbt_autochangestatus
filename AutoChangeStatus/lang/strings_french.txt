@@ -6,7 +6,7 @@ $s_plugin_AutoChangeStatus_plugin_description = 'Change automatiquement les stat
 #Plugin configuration
 $s_plugin_AutoChangeStatus_title= 'Configurer le plugin AutoChangeStatus';
 $s_plugin_AutoChangeStatus_plugin_config_general_description = 'Configuration générale';
-$s_plugin_AutoChangeStatus_plugin_config_description = 'Sélectionner l\'utilisateur qui effectuera les changements de status, et l'ajout des notes. Celui-ci devrait être un administrateur';
+$s_plugin_AutoChangeStatus_plugin_config_description = 'Sélectionner l\'utilisateur qui effectuera les changements de status, et l\'ajout des notes. Celui-ci devrait être un administrateur';
 $s_plugin_AutoChangeStatus_change_status_user = 'Utilisateur';
 $s_plugin_AutoChangeStatus_select_user = 'Selectionner utilisateur';
 $s_plugin_AutoChangeStatus_config_action_update = 'Mettre à jour';

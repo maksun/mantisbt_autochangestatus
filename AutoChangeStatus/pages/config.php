@@ -76,7 +76,7 @@ $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_en
         <?php endwhile; ?>
 <?php else: ?>
         <tr class="row-1">
-            <td colspan="8" style="text-align:center;"><?php echo plugin_lang_get('no_update_changes_created'); ?></td>
+            <td colspan="9" style="text-align:center;"><?php echo plugin_lang_get('no_update_changes_created'); ?></td>
         </tr>
 <?php endif; ?>
 </table>
