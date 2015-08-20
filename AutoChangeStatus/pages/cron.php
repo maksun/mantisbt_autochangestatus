@@ -5,9 +5,6 @@ require_once( dirname(__FILE__) . '/../../../core.php' );
 #En cron on push le nom du module
 plugin_push_current('AutoChangeStatus');
 
-#Flag Debug
-$g_db_log_queries = 1;
-
 #Nom des statuts avec les traductions
 $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_enum_string' ) );
 
@@ -41,10 +38,6 @@ while ($change = db_fetch_array($change_status)) {
             array($change['from_status'], $change['from_status'], $change['project_id'],
             $change['reminder_days']));
 
-        if (db_num_rows($t_bug_notes_pool) < 1 ) {
-            echo 'Pas de changements de notes';
-        }
-
         while ($t_bug = db_fetch_array($t_bug_notes_pool)) {
 
             #On regarde si ces bugs ont été commenté dans la période
@@ -68,10 +61,6 @@ while ($change = db_fetch_array($change_status)) {
     $t_bug_status_pool = db_query_bound($sql_status,
         array($change['from_status'], $change['from_status'], $change['project_id'],
         $change['status_days']));
-
-    if (db_num_rows($t_bug_status_pool) < 1) {
-        echo 'Pas de changements de status à effectuer <br />';
-    }
 
      while ($t_bug_status = db_fetch_array($t_bug_status_pool)) {
 
