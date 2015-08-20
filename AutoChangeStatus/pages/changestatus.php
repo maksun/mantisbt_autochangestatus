@@ -4,6 +4,7 @@ access_ensure_global_level(config_get('manage_plugin_threshold'));
 html_page_top(plugin_lang_get('title'));
 print_manage_menu();
 
+
 #Gestion de la soumission du formulaire (Création )
 if ( gpc_get('submitCreate',false)) {
 
@@ -40,17 +41,25 @@ if ( gpc_get('submitEdit',false)) {
 
 #Mise à jour récupération des données
 if ( $edit_id = gpc_get_int('changestatus_id' , false) ) {
-
     $change_query = db_query("SELECT * FROM mantis_autochange_status WHERE changestatus_id=".$edit_id);
     $change_datas = db_fetch_array($change_query);
 }
 
-
-
+#Bug rencontrés avec certains workflow
+ob_start();
+print_status_option_list("test");
+$content = ob_get_contents();
+ob_end_clean();
+if ( $content == '@0@' ) {
+    include_once(dirname(__FILE__).'/functions.php');
+    $function = 'print_status_option_list_plugin';
+}
+else
+    $function = 'print_status_option_list';
 
 $t_projects = project_cache_all();
 ?>
-<p><?php plugin_lang_get('create_new_change_description'); ?></p>
+<h2><?php echo plugin_lang_get('create_new_change_description'); ?></h2>
 <form action="<?php echo plugin_page('changestatus') ?>" method="post">
     <table>
         <tr <?php echo helper_alternate_class() ?>>
@@ -69,13 +78,14 @@ $t_projects = project_cache_all();
         <tr <?php echo helper_alternate_class() ?>>
             <td class="category"><?php echo plugin_lang_get('from_status'); ?></td>
             <td>
-                <?php echo print_status_option_list("from_status" , $change_datas['from_status']); ?>
+
+                <?php echo $function("from_status" , $change_datas['from_status']); ?>
             </td>
         </tr>
         <tr <?php echo helper_alternate_class() ?>>
             <td class="category"><?php echo plugin_lang_get('to_status'); ?></td>
             <td>
-                <?php echo print_status_option_list("to_status",$change_datas['to_status']); ?>
+                <?php echo $function("to_status",$change_datas['to_status']); ?>
             </td>
         </tr>
         <tr <?php echo helper_alternate_class() ?>>
@@ -96,7 +106,7 @@ $t_projects = project_cache_all();
         <tr <?php echo helper_alternate_class() ?>>
             <td class="category"><?php echo plugin_lang_get('reminder_message'); ?></td>
             <td>
-                <textarea name="reminder_message" cols="50" rows="5"><?php echo $change_datas['reminder_message'];?></textarea>
+                <textarea name="reminder_message" cols="50" rows="5"><?php echo isset($change_datas['reminder_message']) ? $change_datas['reminder_message']: plugin_lang_get('before_change_status_message');?></textarea>
             </td>
         </tr>
         <tr <?php echo helper_alternate_class() ?>>
@@ -117,7 +127,7 @@ $t_projects = project_cache_all();
         <tr <?php echo helper_alternate_class() ?>>
             <td class="center" colspan="2">
                 <?php if (isset($edit_id) ) : ?><input type="hidden" name="changestatus_id" value="<?php echo $edit_id;?>" /><?php endif; ?>
-                <input type="submit" name="<?php if (isset($edit_id) ) : ?>submitEdit<?php else: ?>submitCreate<?php endif; ?>" value="<?php echo plugin_lang_get("create_change") ?>"/>
+                <input type="submit" name="<?php if (isset($edit_id) && $edit_id != 0 ) : ?>submitEdit<?php else: ?>submitCreate<?php endif; ?>" value="<?php echo plugin_lang_get("create_change") ?>"/>
             </td>
         </tr>
     </table>

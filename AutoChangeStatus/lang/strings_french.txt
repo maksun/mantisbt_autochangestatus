@@ -29,4 +29,5 @@ $s_plugin_AutoChangeStatus_all_projects = 'Tous les projets';
 $s_plugin_AutoChangeStatus_yes = 'Oui';
 $s_plugin_AutoChangeStatus_no = 'Non';
 $s_plugin_AutoChangeStatus_create_change = 'Créer';
- 
+$s_plugin_AutoChangeStatus_before_change_status_message = "Bonjour,\n\nCe ticket est en statut '%s' depuis %d jours.\n\nSans ajout de note de votre part, son statut sera automatiquement changé en '%s' dans %d jours \n\n\nmessage automatique.";
+$s_plugin_AutoChangeStatus_change_status_message = "Changement automatique du statut du ticket \nPas de retour depuis %d jours";

@@ -1,11 +1,5 @@
 <?php
-/*
-  Plugin AutoChangeStatus pour Mantis BugTracker :
-  - Changement automatique de statuts des bugs
-  © Hennes Hervé - 2015
-  http://www.h-hennes.fr
- */
- 
+
 require_once( dirname(__FILE__) . '/../../../core.php' );
 
 #En cron on push le nom du module
@@ -16,15 +10,6 @@ $g_db_log_queries = 1;
 
 #Nom des statuts avec les traductions
 $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_enum_string' ) );
-
-#Messages qui vont être ajoutés
-$before_change_status_message = "Bonjour,\n\n"
-    . "Ce ticket est en statut '%s' depuis %d jours.\n\n"
-    ."Sans ajout de note de votre part, son statut sera automatiquement changé en '%s' dans %d jours \n\n\n"
-    ."message automatique";
-
-$change_status_message = "Changement automatique du statut du ticket \n"
-    . "Pas de retour depuis %d jours";
 
 #Requête pour récupérer la date de modification du statut avec le nombre de jours correspondants
     $sql_status = "SELECT h.* , FROM_UNIXTIME(date_modified, '%Y-%m-%d') AS date_status_modified
@@ -69,7 +54,7 @@ while ($change = db_fetch_array($change_status)) {
             #Si pas de notes on en rajoute une
             if (db_num_rows($t_user_notes) < 1) {
 
-                $t_bugnote_text = sprintf($before_change_status_message,$t_status_names[$change['from_status']],$change['reminder_days'],$t_status_names[$change['to_status']],($change['status_days'] - $change['reminder_days']));
+                $t_bugnote_text = sprintf(plugin_lang_get('before_change_status_message'),$t_status_names[$change['from_status']],$change['reminder_days'],$t_status_names[$change['to_status']],($change['status_days'] - $change['reminder_days']));
                 bugnote_add( $t_bug['bug_id'], $t_bugnote_text,'0:02', false, BUGNOTE,'', plugin_config_get('change_status_user'));
             
             }
@@ -98,7 +83,7 @@ while ($change = db_fetch_array($change_status)) {
             if (db_num_rows($t_user_notes_status) < 1) {
 
                 #Rajout d'une note informative
-                $t_bugnote_text_status = sprintf($change_status_message,$change['status_days']);
+                $t_bugnote_text_status = sprintf(plugin_lang_get('change_status_message'),$change['status_days']);
                 bugnote_add( $t_bug_status['bug_id'], $t_bugnote_text_status,'0:02', false, BUGNOTE,'', plugin_config_get('change_status_user'));
 
                 #Changement du status du bug

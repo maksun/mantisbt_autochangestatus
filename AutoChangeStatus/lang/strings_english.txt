@@ -29,4 +29,6 @@ $s_plugin_AutoChangeStatus_all_projects = 'All projects';
 $s_plugin_AutoChangeStatus_yes = 'Yes';
 $s_plugin_AutoChangeStatus_no = 'No';
 $s_plugin_AutoChangeStatus_create_change = 'Create';
+$s_plugin_AutoChangeStatus_before_change_status_message = "Hello,\n\nThis bug is in status '%s' since %d days.\n\nWithout any return from you its status will change to '%s' in %d days \n\n\nautomatic message";
+$s_plugin_AutoChangeStatus_change_status_message = "Automatic status change \no customer return since %d days";
  
