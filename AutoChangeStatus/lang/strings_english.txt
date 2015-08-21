@@ -24,7 +24,7 @@ $s_plugin_AutoChangeStatus_no_update_changes_created = 'No change updates create
 $s_plugin_AutoChangeStatus_create_new_status_update = 'Create new status update';
 
 #Add new change page
-$s_plugin_AutoChangeStatus_create_new_change_description = ' To describe';
+$s_plugin_AutoChangeStatus_create_new_change_description = ' Add new status change';
 $s_plugin_AutoChangeStatus_all_projects = 'All projects';
 $s_plugin_AutoChangeStatus_yes = 'Yes';
 $s_plugin_AutoChangeStatus_no = 'No';
