@@ -12,4 +12,4 @@ This plugin will change automaticaly bug statuts to another after a configurable
 </p>
 
 <p>In order to process the change add a daily crontab on the folowing file </p>
-<pre>mantisdir/plugins/AutoChange/pages/cron.php </pre>
+<pre>mantisdir/plugins/AutoChangeStatus/pages/cron.php </pre>
