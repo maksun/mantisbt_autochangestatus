@@ -14,6 +14,13 @@ $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_en
              LEFT JOIN mantis_bug_history_table h ON ( b.id = h.bug_id AND field_name='status' AND new_value=".db_param()." )
              WHERE b.status = ".db_param()." AND b.project_id = ".db_param()."
              #AND CURDATE() = DATE_ADD(FROM_UNIXTIME(date_modified, '%Y-%m-%d'), INTERVAL ".db_param()." DAY)";
+			 
+	#@ToDO : Essayer de grouper les requêtes		 
+	$sql_status_no_project =  "SELECT h.* , FROM_UNIXTIME(date_modified, '%Y-%m-%d') AS date_status_modified
+             FROM mantis_bug_table b
+             LEFT JOIN mantis_bug_history_table h ON ( b.id = h.bug_id AND field_name='status' AND new_value=".db_param()." )
+             WHERE b.status = ".db_param()."
+             #AND CURDATE() = DATE_ADD(FROM_UNIXTIME(date_modified, '%Y-%m-%d'), INTERVAL ".db_param()." DAY)";		 
 
 #Requête pour récupérer la date de la dernière note UTILISATEUR sur le bug
     $sql_notes = "SELECT * FROM mantis_bugnote_table
@@ -34,9 +41,14 @@ while ($change = db_fetch_array($change_status)) {
     if ($change['reminder'] == 1) {
 
         #Récupération des bugs éligibles à l'ajout d'une note de rappel
-        $t_bug_notes_pool = db_query_bound($sql_status,
-            array($change['from_status'], $change['from_status'], $change['project_id'],
-            $change['reminder_days']));
+		if ( $change['project_id'] != 0 ) {
+			$t_bug_notes_pool = db_query_bound($sql_status,
+			    array($change['from_status'], $change['from_status'], $change['project_id'],
+			    $change['reminder_days']));
+		} else {
+			$t_bug_notes_pool = db_query_bound($sql_status_no_project,
+                array($change['from_status'], $change['from_status'],$change['reminder_days']));
+		}
 
         while ($t_bug = db_fetch_array($t_bug_notes_pool)) {
 
@@ -58,9 +70,14 @@ while ($change = db_fetch_array($change_status)) {
 # 2ème étape : Changement automatique des statuts
 ###
     
-    $t_bug_status_pool = db_query_bound($sql_status,
-        array($change['from_status'], $change['from_status'], $change['project_id'],
-        $change['status_days']));
+	if ( $change['project_id'] != 0 ) {
+        $t_bug_status_pool = db_query_bound($sql_status,
+            array($change['from_status'], $change['from_status'], $change['project_id'],
+            $change['status_days']));
+	} else {
+	    $t_bug_status_pool = db_query_bound($sql_status_no_project,
+            array($change['from_status'], $change['from_status'],$change['status_days']));
+	}
 
      while ($t_bug_status = db_fetch_array($t_bug_status_pool)) {
 
