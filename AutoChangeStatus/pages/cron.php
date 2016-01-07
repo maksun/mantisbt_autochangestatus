@@ -4,6 +4,8 @@ require_once( dirname(__FILE__) . '/../../../core.php' );
 
 #En cron on push le nom du module
 plugin_push_current('AutoChangeStatus');
+#Utilisateur par défaut
+$g_cache_current_user_id = plugin_config_get('change_status_user');
 
 #Nom des statuts avec les traductions
 $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_enum_string' ) );
