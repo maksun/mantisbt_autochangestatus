@@ -1,7 +1,8 @@
 Module AutoChangeStatus
 
-Changement automatique du statuts des bugs aprËs une durÈe dÈfinie.
+Changement automatique du statuts des bugs apr√®s une dur√©e d√©finie.
 
 2015-08-19 : V 0.1.0 : Version initiale du module
-2015-08-20 : V 0.1.1 : Correctif affichage workflow avec configuration personnalisÈe / Optimisations traductions
-2015-08-26 : V 0.1.2 : Correctif si pas de projet spÈcifique choisi 
+2015-08-20 : V 0.1.1 : Correctif affichage workflow avec configuration personnalis√©e / Optimisations traductions
+2015-08-26 : V 0.1.2 : Correctif si pas de projet sp√©cifique choisi 
+2016-07-26 : V 0.1.3 : Compatibilit√© mantis 1.3

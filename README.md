@@ -13,3 +13,7 @@ This plugin will change automaticaly bug statuts to another after a configurable
 
 <p>In order to process the change add a daily crontab on the folowing file </p>
 <pre>mantisdir/plugins/AutoChangeStatus/pages/cron.php </pre>
+
+Plugin for mantis bug tracker 1.3.x
+
+A version for mantis bug tracker 1.2.x is avalaible on the branch 1.2.x

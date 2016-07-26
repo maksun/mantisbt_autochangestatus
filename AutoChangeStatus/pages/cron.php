@@ -1,4 +1,23 @@
 <?php
+# MantisBT - A PHP based bugtracking system
+# MantisBT is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# MantisBT is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
+
+#
+#  Autochange status Plugin for Mantis BugTracker :
+#  © Hennes Hervé <contact@h-hennes.fr>
+#    2015-2016
+#  http://www.h-hennes.fr/blog/  
 
 require_once( dirname(__FILE__) . '/../../../core.php' );
 
@@ -14,7 +33,7 @@ $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_en
              LEFT JOIN mantis_bug_history_table h ON ( b.id = h.bug_id AND field_name='status' AND new_value=".db_param()." )
              WHERE b.status = ".db_param()." AND b.project_id = ".db_param()."
              AND CURDATE() = DATE_ADD(FROM_UNIXTIME(date_modified, '%Y-%m-%d'), INTERVAL ".db_param()." DAY)";
-			 
+    			 
 	#@ToDO : Essayer de grouper les requêtes		 
 	$sql_status_no_project =  "SELECT h.* , FROM_UNIXTIME(date_modified, '%Y-%m-%d') AS date_status_modified
              FROM mantis_bug_table b

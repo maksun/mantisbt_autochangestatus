@@ -1,4 +1,24 @@
 <?php
+# MantisBT - A PHP based bugtracking system
+# MantisBT is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# MantisBT is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
+
+#
+#  Autochange status Plugin for Mantis BugTracker :
+#  © Hennes Hervé <contact@h-hennes.fr>
+#    2015-2016
+#  http://www.h-hennes.fr/blog/
+
 auth_reauthenticate();
 access_ensure_global_level(config_get('manage_plugin_threshold'));
 html_page_top(plugin_lang_get('title'));
@@ -46,16 +66,8 @@ if ( $edit_id = gpc_get_int('changestatus_id' , false) ) {
 }
 
 #Bug rencontrés avec certains workflow
-ob_start();
-print_status_option_list("test");
-$content = ob_get_contents();
-ob_end_clean();
-if ( $content == '@0@' ) {
-    include_once(dirname(__FILE__).'/functions.php');
-    $function = 'print_status_option_list_plugin';
-}
-else
-    $function = 'print_status_option_list';
+include_once(dirname(__FILE__).'/functions.php');
+$function = 'print_status_option_list_plugin';
 
 $t_projects = project_cache_all();
 ?>
