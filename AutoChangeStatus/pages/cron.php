@@ -24,6 +24,9 @@ require_once( dirname(__FILE__) . '/../../../core.php' );
 #En cron on push le nom du module
 plugin_push_current('AutoChangeStatus');
 
+#Utilisateur par défaut
+$g_cron_current_user_id = plugin_config_get('change_status_user');
+
 #Nom des statuts avec les traductions
 $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_enum_string' ) );
 
@@ -79,7 +82,7 @@ while ($change = db_fetch_array($change_status)) {
             if (db_num_rows($t_user_notes) < 1) {
 
                 $t_bugnote_text = sprintf(plugin_lang_get('before_change_status_message'),$t_status_names[$change['from_status']],$change['reminder_days'],$t_status_names[$change['to_status']],($change['status_days'] - $change['reminder_days']));
-                bugnote_add( $t_bug['bug_id'], $t_bugnote_text,'0:02', false, BUGNOTE,'', plugin_config_get('change_status_user'));
+                bugnote_add( $t_bug['bug_id'], $t_bugnote_text,'0:02', false, BUGNOTE,'', $g_cron_current_user_id);
             
             }
         }
@@ -109,7 +112,7 @@ while ($change = db_fetch_array($change_status)) {
 
                 #Rajout d'une note informative
                 $t_bugnote_text_status = sprintf(plugin_lang_get('change_status_message'),$change['status_days']);
-                bugnote_add( $t_bug_status['bug_id'], $t_bugnote_text_status,'0:02', false, BUGNOTE,'', plugin_config_get('change_status_user'));
+                bugnote_add( $t_bug_status['bug_id'], $t_bugnote_text_status,'0:02', false, BUGNOTE,'', $g_cron_current_user_id);
 
                 #Changement du status du bug
                 $t_bug_model = bug_get($t_bug_status['bug_id']);
@@ -117,4 +120,4 @@ while ($change = db_fetch_array($change_status)) {
                 $t_bug_model->update();
         }
      }
-}
+}  

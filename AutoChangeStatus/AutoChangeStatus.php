@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 # MantisBT - A PHP based bugtracking system
 # MantisBT is free software: you can redistribute it and/or modify
@@ -26,7 +27,7 @@ class AutoChangeStatusPlugin extends MantisPlugin
         $this->name =  plugin_lang_get('plugin_title');
         $this->description = plugin_lang_get('plugin_description');
         $this->page = 'config.php';
-        $this->version = '0.1.3';
+        $this->version = '0.1.4';
         $this->requires = array(
             'MantisCore' => '1.3.0',
         );
