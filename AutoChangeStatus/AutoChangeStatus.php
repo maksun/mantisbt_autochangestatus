@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 # MantisBT - A PHP based bugtracking system
 # MantisBT is free software: you can redistribute it and/or modify
