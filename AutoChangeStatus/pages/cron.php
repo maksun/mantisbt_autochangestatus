@@ -32,27 +32,27 @@ $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_en
 
 #Requête pour récupérer la date de modification du statut avec le nombre de jours correspondants
     $sql_status = "SELECT h.* , FROM_UNIXTIME(date_modified, '%Y-%m-%d') AS date_status_modified
-             FROM mantis_bug_table b
-             LEFT JOIN mantis_bug_history_table h ON ( b.id = h.bug_id AND field_name='status' AND new_value=".db_param()." )
+             FROM {bug} b
+             LEFT JOIN {bug_history} h ON ( b.id = h.bug_id AND field_name='status' AND new_value=".db_param()." )
              WHERE b.status = ".db_param()." AND b.project_id = ".db_param()."
              AND CURDATE() = DATE_ADD(FROM_UNIXTIME(date_modified, '%Y-%m-%d'), INTERVAL ".db_param()." DAY)";
-    			 
-	#@ToDO : Essayer de grouper les requêtes		 
+
+	#@ToDO : Essayer de grouper les requêtes
 	$sql_status_no_project =  "SELECT h.* , FROM_UNIXTIME(date_modified, '%Y-%m-%d') AS date_status_modified
-             FROM mantis_bug_table b
-             LEFT JOIN mantis_bug_history_table h ON ( b.id = h.bug_id AND field_name='status' AND new_value=".db_param()." )
+             FROM {bug} b
+             LEFT JOIN {bug_history} h ON ( b.id = h.bug_id AND field_name='status' AND new_value=".db_param()." )
              WHERE b.status = ".db_param()."
-             AND CURDATE() = DATE_ADD(FROM_UNIXTIME(date_modified, '%Y-%m-%d'), INTERVAL ".db_param()." DAY)";		 
+             AND CURDATE() = DATE_ADD(FROM_UNIXTIME(date_modified, '%Y-%m-%d'), INTERVAL ".db_param()." DAY)";
 
 #Requête pour récupérer la date de la dernière note UTILISATEUR sur le bug
-    $sql_notes = "SELECT * FROM mantis_bugnote_table
+    $sql_notes = "SELECT * FROM {bugnote}
                   WHERE bug_id= ".db_param().
         " AND reporter_id <> ".plugin_config_get('change_status_user').
         " AND date_submitted > ".db_param();
 
 
 #Récupération des changements automatiques qui sont actifs
-$change_status = db_query("SELECT * FROM mantis_autochange_status WHERE active=1");
+$change_status = db_query("SELECT * FROM {plugin_autochangestatus} WHERE active=1");
 
 #Boucle de traitement
 while ($change = db_fetch_array($change_status)) {

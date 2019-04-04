@@ -27,16 +27,14 @@ layout_page_begin();
 
 print_manage_menu();
 
-$t_user_table = db_get_table('user');
-$query        = "SELECT id,username
-        FROM $t_user_table
+$query = "SELECT id,username
+        FROM {user}
         ORDER BY username ASC";
-
 $t_users = db_query($query);
 
-#$t_changes_table  = db_get_table('mantis_autochange_status');
-$query_changes    = "SELECT p.name AS project_name, pacs.* FROM ".db_get_table('plugin_autochangestatus')." pacs
-    LEFT JOIN ".db_get_table('project')." p ON p.id = pacs.project_id";
+$query_changes    = "SELECT p.name AS project_name, pacs.*
+    FROM {plugin_autochangestatus} pacs
+    LEFT JOIN {project} p ON p.id = pacs.project_id";
 $t_changes        = db_query($query_changes);
 $t_changes_number = db_num_rows($t_changes);
 

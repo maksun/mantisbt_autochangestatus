@@ -25,7 +25,7 @@ access_ensure_global_level(config_get('manage_plugin_threshold'));
 if ( gpc_get('submitDelete',false)) {
     form_security_validate( 'plugin_AutoChangeStatus_changestatus_edit' );
     helper_ensure_confirmed( sprintf( plugin_lang_get( 'ensure_delete' ), $t_repo->name ), plugin_lang_get( 'delete_changestatus' ) );
-    $query = "DELETE FROM ".db_get_table('plugin_autochangestatus')." WHERE changestatus_id=".db_param();
+    $query = "DELETE FROM {plugin_autochangestatus} WHERE changestatus_id=".db_param();
     db_query_bound($query,array(gpc_get_int('changestatus_id')));
     print_successful_redirect( plugin_page( 'config', true ) );
     form_security_purge( 'plugin_AutoChangeStatus_changestatus_edit' );
@@ -39,7 +39,7 @@ print_manage_menu();
 #Gestion de la soumission du formulaire (Création )
 if ( gpc_get('submitCreate',false)) {
     form_security_validate( 'plugin_AutoChangeStatus_changestatus_edit' );
-    $query = "INSERT INTO ".db_get_table('plugin_autochangestatus')."
+    $query = "INSERT INTO {plugin_autochangestatus}
         (`project_id`,`from_status`,`to_status`,`status_days`,`reminder`,`reminder_message`,`reminder_message_private`,`reminder_days`,`active`)
         VALUES ( ".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().")";
 
@@ -56,7 +56,7 @@ if ( gpc_get('submitCreate',false)) {
 #Gestion de la soumission du formulaire (Mise à jour )
 if ( gpc_get('submitEdit',false)) {
     form_security_validate( 'plugin_AutoChangeStatus_changestatus_edit' );
-    $query = "UPDATE ".db_get_table('plugin_autochangestatus')." "
+    $query = "UPDATE {plugin_autochangestatus} "
         . "SET `project_id` =".db_param().",`from_status`=".db_param().",`to_status`=".db_param().",`status_days`=".db_param().",`reminder`=".db_param().",`reminder_message`=".db_param().",`reminder_message_private`=".db_param().",`reminder_days`=".db_param().",`active`=".db_param().""
         ." WHERE changestatus_id=".db_param();
 
@@ -71,7 +71,7 @@ if ( gpc_get('submitEdit',false)) {
 
 #Mise à jour récupération des données
 if ( $edit_id = gpc_get_int('changestatus_id' , false) ) {
-    $change_query = db_query("SELECT * FROM ".db_get_table('plugin_autochangestatus')." WHERE changestatus_id=".$edit_id);
+    $change_query = db_query("SELECT * FROM {plugin_autochangestatus} WHERE changestatus_id=".$edit_id);
     $change_datas = db_fetch_array($change_query);
 }
 

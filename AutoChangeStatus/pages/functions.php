@@ -37,7 +37,7 @@ function print_status_option_list_plugin( $p_select_label, $p_current_value = 0,
                     #On ne veut pas afficher la valeur @0@
                     if ( $val == '@0@')
                         continue;
-               
+
 			echo '<option value="' . $key . '"';
 			check_selected( $key, $p_current_value,false );#fix 1.3.0
 			echo '>' . $val . '</option>';
@@ -55,7 +55,7 @@ function get_status_option_list_plugin( $p_user_auth = 0, $p_current_value = 0, 
 	$t_config_var_value = config_get( 'status_enum_string', null, null, $p_project_id );
 	$t_enum_workflow = config_get( 'status_enum_workflow', null, null, $p_project_id );
 
-	
+
 	$t_enum_values = MantisEnum::getValues( $t_config_var_value );
 	$t_enum_list = array();
 

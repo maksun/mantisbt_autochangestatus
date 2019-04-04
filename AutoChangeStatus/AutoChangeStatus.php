@@ -49,14 +49,14 @@ class AutoChangeStatusPlugin extends MantisPlugin
      */
     public function install(){
 
-        return db_query("CREATE TABLE IF NOT EXISTS ".db_get_table('plugin_autochangestatus')." (
+        return db_query("CREATE TABLE IF NOT EXISTS {plugin_autochangestatus} (
                         `changestatus_id` int(11) NOT NULL AUTO_INCREMENT,
                         `project_id` int(11) NOT NULL,
                         `from_status` int(3) NOT NULL,
                         `to_status` int(3) NOT NULL,
                         `status_days` int(3) NOT NULL,
                         `reminder` tinyint(1) NOT NULL,
-                        `reminder_message` varchar(255) NOT NULL,
+                        `reminder_message` text,
                         `reminder_message_private` tinyint(1) NOT NULL,
                         `reminder_days` int(11) NOT NULL,
                         `active` tinyint(1) NOT NULL,
@@ -69,7 +69,7 @@ class AutoChangeStatusPlugin extends MantisPlugin
      * Desinstallation du plugin
      */
     public function uninstall(){
-        return db_query('DROP TABLE '.db_get_table('plugin_autochangestatus'));
+        return db_query("DROP TABLE {plugin_autochangestatus}");
     }
 
 }
