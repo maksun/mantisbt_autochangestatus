@@ -22,83 +22,140 @@
 auth_reauthenticate();
 access_ensure_global_level(config_get('manage_plugin_threshold'));
 
-html_page_top(plugin_lang_get('title'));
+layout_page_header(plugin_lang_get('title'));
+layout_page_begin();
 
 print_manage_menu();
 
-$t_user_table = db_get_table('mantis_user_table');
-$query        = "SELECT id,username
-        FROM $t_user_table
+$query = "SELECT id,username
+        FROM {user}
         ORDER BY username ASC";
-
 $t_users = db_query($query);
 
-#$t_changes_table  = db_get_table('mantis_autochange_status');
-$query_changes    = "SELECT * FROM mantis_autochange_status";
+$query_changes    = "SELECT p.name AS project_name, pacs.*
+    FROM {plugin_autochangestatus} pacs
+    LEFT JOIN {project} p ON p.id = pacs.project_id";
 $t_changes        = db_query($query_changes);
 $t_changes_number = db_num_rows($t_changes);
 
 #Nom des statuts avec les traductions
 $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_enum_string' ) );
+require_once(dirname(__FILE__).'/functions.php');
 
 ?>
-<br />
-<h2><?php echo plugin_lang_get('plugin_config_general_description'); ?></h2>
-<p><?php echo plugin_lang_get('plugin_config_description'); ?></p>
-<form action="<?php echo plugin_page('config_edit') ?>" method="post">
-    <table>
-        <tr <?php echo helper_alternate_class() ?>>
-            <td class="category"><?php echo plugin_lang_get('change_status_user'); ?></td>
-            <td>
-                <select name="change_status_user">
-                    <option value="0"><?php echo plugin_lang_get('select_user'); ?></option>
-                    <?php while ($user             = db_fetch_array($t_users)) : ?>
-                        <option value="<?php echo $user['id']; ?>" <?php if (plugin_config_get('change_status_user')== $user['id']):
-                            ?> selected="selected"<?php endif; ?> >
-                        <?php echo $user['username']; ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
-            </td>
-        </tr>
-        <tr <?php echo helper_alternate_class() ?>>
-            <td class="center" colspan="2"><input type="submit" value="<?php echo plugin_lang_get("config_action_update") ?>"/></td>
-        </tr>
-    </table>
-</form>
 
-<h2><?php echo plugin_lang_get('plugin_changes_list'); ?></h2>
-<table class="width100" cellspacing="1">
-    <tr class="row-category" >
-        <td><?php echo plugin_lang_get('project'); ?></td>
-        <td><?php echo plugin_lang_get('from_status'); ?></td>
-        <td><?php echo plugin_lang_get('to_status'); ?></td>
-        <td><?php echo plugin_lang_get('status_days'); ?></td>
-        <td><?php echo plugin_lang_get('reminder'); ?></td>
-        <td><?php echo plugin_lang_get('reminder_message'); ?></td>
-        <td><?php echo plugin_lang_get('reminder_days'); ?></td>
-        <td><?php echo plugin_lang_get('active'); ?></td>
-        <td><?php echo plugin_lang_get('edit'); ?></td>
-    </tr>
-    <?php if ($t_changes_number > 0) : ?>
-    <?php while ($change = db_fetch_array($t_changes)) : ?>
-            <tr  <?php echo helper_alternate_class() ?>>
-                <td><?php echo $change['project_id']; ?></td>
-                <td><?php echo $t_status_names[$change['from_status']]; ?></td>
-                <td><?php echo $t_status_names[$change['to_status']]; ?></td>
-                <td><?php echo $change['status_days']; ?></td>
-                <td><?php echo ($change['reminder'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
-                <td><?php echo $change['reminder_message']; ?></td>
-                <td><?php echo $change['reminder_days']; ?></td>
-                <td><?php echo ($change['active'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
-                <td><a href="<?php echo plugin_page('changestatus');?>&changestatus_id=<?php echo $change['changestatus_id']; ?>"><?php echo plugin_lang_get('edit'); ?></a>
-            </tr>
-        <?php endwhile; ?>
-<?php else: ?>
-        <tr class="row-1">
-            <td colspan="9" style="text-align:center;"><?php echo plugin_lang_get('no_update_changes_created'); ?></td>
-        </tr>
-<?php endif; ?>
-</table>
+<div class="col-md-12 col-xs-12">
+    <div class="space-10"></div>
+    <div class="form-container">
+        <form action="<?php echo plugin_page( 'config_edit' )?>" method="post">
+            <?php echo form_security_field( 'plugin_AutoChangeStatus_config_edit' ) ?>
 
-<p><a href="<?php echo plugin_page('changestatus');?>"><?php echo plugin_lang_get('create_new_status_update');?></a></p>
+            <div class="widget-box widget-color-blue2">
+                <div class="widget-header widget-header-small">
+                    <h4 class="widget-title lighter">
+                        <?php echo plugin_lang_get('plugin_config_general_description') ?>
+                    </h4>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main no-padding">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed table-striped">
+                                <tr>
+                                    <th class="category">
+                                        <?php echo plugin_lang_get('change_status_user'); ?>
+                                    </th>
+                                    <td>
+                                        <select name="change_status_user">
+                                            <option value="0"><?php echo plugin_lang_get('select_user'); ?></option>
+                                            <?php while ($user = db_fetch_array($t_users)) : ?>
+                                                <option value="<?php echo $user['id']; ?>" <?php if (plugin_config_get('change_status_user')== $user['id']):
+                                                    ?> selected="selected"<?php endif; ?> >
+                                                <?php echo $user['username']; ?>
+                                                </option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                        <br>
+                                        <span class="small"><?php echo plugin_lang_get('plugin_config_description'); ?></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="widget-toolbox padding-8 clearfix">
+                        <input type="submit" class="btn btn-primary btn-white btn-round" value="<?php echo lang_get( 'change_configuration' )?>" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="space-10"></div>
+
+    <div class="form-container">
+        <form id="formatting-config-form" action="<?php echo plugin_page( 'config_edit' )?>" method="post">
+            <?php echo form_security_field( 'plugin_AutoChangeStatus_config_edit' ) ?>
+
+            <div class="widget-box widget-color-blue2">
+                <div class="widget-header widget-header-small">
+                    <h4 class="widget-title lighter">
+                        <?php echo plugin_lang_get('plugin_changes_list'); ?>
+                    </h4>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main no-padding">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="column-edit"> &nbsp; </th>
+                                        <th><?php echo plugin_lang_get('project'); ?></th>
+                                        <th><?php echo plugin_lang_get('from_status'); ?></th>
+                                        <th><?php echo plugin_lang_get('to_status'); ?></th>
+                                        <th><?php echo plugin_lang_get('status_days'); ?></th>
+                                        <th><?php echo plugin_lang_get('reminder'); ?></th>
+                                        <th><?php echo plugin_lang_get('reminder_message'); ?></th>
+                                        <th><?php echo plugin_lang_get('reminder_message_private_short'); ?></th>
+                                        <th><?php echo plugin_lang_get('reminder_days'); ?></th>
+                                        <th><?php echo plugin_lang_get('active'); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if ($t_changes_number > 0) : ?>
+                                        <?php while ($change = db_fetch_array($t_changes)) : ?>
+                                            <tr>
+                                                <td class="column-edit center">
+                                                    <a href="<?php echo plugin_page('changestatus');?>&changestatus_id=<?php echo $change['changestatus_id']; ?>">
+                                                        <i class="fa fa-pencil bigger-130 padding-2 grey" title="<?php echo plugin_lang_get('edit'); ?>"></i>
+                                                    </a>
+                                                </td>
+                                                <td><?php echo htmlentities($change['project_name']); ?></td>
+                                                <td><?php echo htmlentities($t_status_names[$change['from_status']]); ?></td>
+                                                <td><?php echo htmlentities($t_status_names[$change['to_status']]); ?></td>
+                                                <td class="center"><?php echo $change['status_days']; ?></td>
+                                                <td class="center"><?php echo ($change['reminder'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
+                                                <td><?php echo nl2br(htmlentities(reminder_message_process( $change['reminder_message'], $change ))); ?></td>
+                                                <td class="center"><?php echo ($change['reminder_message_private'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
+                                                <td class="center"><?php echo $change['reminder_days']; ?></td>
+                                                <td class="center"><?php echo ($change['active'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="9" class="center"><?php echo plugin_lang_get('no_update_changes_created'); ?></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="widget-toolbox padding-8 clearfix">
+                        <a href="<?php echo plugin_page('changestatus');?>" class="btn btn-primary btn-white btn-round"><?php echo plugin_lang_get("create_new_status_update") ?></a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<?php
+layout_page_end();
