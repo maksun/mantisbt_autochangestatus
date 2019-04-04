@@ -46,7 +46,7 @@ if ( gpc_get('submitCreate',false)) {
     db_query_bound($query,
         array(gpc_get_int('project_id'), gpc_get_int('from_status'), gpc_get_int('to_status'),
         gpc_get_int('status_days'), gpc_get_int('reminder'),
-        gpc_get_string('reminder_message'),gpc_get_string('reminder_message_private'),gpc_get_int('reminder_days'), gpc_get_int('active'))
+        gpc_get_string('reminder_message'),gpc_get_int('reminder_message_private'),gpc_get_int('reminder_days'), gpc_get_int('active'))
     );
 
     print_successful_redirect( plugin_page( 'config', true ) );
@@ -63,7 +63,7 @@ if ( gpc_get('submitEdit',false)) {
     db_query_bound($query,
         array(gpc_get_int('project_id'), gpc_get_int('from_status'), gpc_get_int('to_status'),
         gpc_get_int('status_days'), gpc_get_int('reminder'),
-        gpc_get_string('reminder_message'),gpc_get_string('reminder_message_private'),gpc_get_int('reminder_days'), gpc_get_int('active'),gpc_get_int('changestatus_id'))
+        gpc_get_string('reminder_message'),gpc_get_int('reminder_message_private'),gpc_get_int('reminder_days'), gpc_get_int('active'),gpc_get_int('changestatus_id'))
     );
 
     print_successful_redirect( plugin_page( 'config', true ) );
@@ -150,13 +150,13 @@ $t_projects = project_cache_all();
                                 <tr>
                                     <th class="category"><?php echo plugin_lang_get('reminder_message_private'); ?></th>
                                     <td>
-                                        <label for="reminder_message_private_0">
-                                            <input type="radio" class="ace" name="reminder_message_private" id="reminder_message_private_0" value="0" <?php echo( ON != $change_datas['reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
+                                        <label for="reminder_message_private_off">
+                                            <input type="radio" class="ace" name="reminder_message_private" id="reminder_message_private_off" value="<?php echo OFF; ?>" <?php echo( ON != $change_datas['reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
                                             <span class="lbl padding-6"><?php echo lang_get('public'); ?></span>
                                         </label>
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <label for="reminder_message_private_1">
-                                            <input type="radio" class="ace" name="reminder_message_private" id="reminder_message_private_1" value="1" <?php echo( ON == $change_datas['reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
+                                        <label for="reminder_message_private_on">
+                                            <input type="radio" class="ace" name="reminder_message_private" id="reminder_message_private_on" value="<?php echo ON; ?>" <?php echo( ON == $change_datas['reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
                                             <span class="lbl padding-6"><?php echo lang_get('private'); ?></span>
                                         </label>
                                     </td>
