@@ -18,6 +18,7 @@ $s_plugin_AutoChangeStatus_status_days = 'Nombre de jours avant changement';
 $s_plugin_AutoChangeStatus_status_days_description = 'Nombre de jours avant modification automatique du statut si aucune modification n\'est apportée.';
 $s_plugin_AutoChangeStatus_reminder = 'Rappel';
 $s_plugin_AutoChangeStatus_reminder_message = 'Note de rappel';
+$s_plugin_AutoChangeStatus_reminder_message_description = 'Les macros disponibles sont les suivantes :';
 $s_plugin_AutoChangeStatus_reminder_message_private = 'Visibilité de la note de rappel';
 $s_plugin_AutoChangeStatus_reminder_message_private_short = 'Note privée';
 $s_plugin_AutoChangeStatus_reminder_days = 'Nombre de jours avant rappel';
@@ -36,7 +37,7 @@ $s_plugin_AutoChangeStatus_create = 'Créer';
 $s_plugin_AutoChangeStatus_change = 'Enregistrer les modifications';
 $s_plugin_AutoChangeStatus_delete = 'Supprimer';
 $s_plugin_AutoChangeStatus_before_change_status_message = "Bonjour,\n\nCe ticket est en statut '%s' depuis %d jours.\n\nSans ajout de note de votre part, son statut sera automatiquement changé en '%s' dans %d jours \n\n\nmessage automatique.";
-$s_plugin_AutoChangeStatus_change_status_message = "Changement automatique du statut du ticket \nPas de retour depuis %d jours";
+$s_plugin_AutoChangeStatus_change_status_message = "Changement automatique du statut du ticket en '%s'.\nPas de retour depuis %d jours";
 $s_plugin_AutoChangeStatus_back = "Retour";
 
 #Delete a change status rule

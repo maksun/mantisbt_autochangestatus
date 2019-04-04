@@ -40,6 +40,7 @@ $t_changes_number = db_num_rows($t_changes);
 
 #Nom des statuts avec les traductions
 $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_enum_string' ) );
+require_once(dirname(__FILE__).'/functions.php');
 
 ?>
 
@@ -132,7 +133,7 @@ $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_en
                                                 <td><?php echo htmlentities($t_status_names[$change['to_status']]); ?></td>
                                                 <td class="center"><?php echo $change['status_days']; ?></td>
                                                 <td class="center"><?php echo ($change['reminder'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
-                                                <td><?php echo nl2br(htmlentities($change['reminder_message'])); ?></td>
+                                                <td><?php echo nl2br(htmlentities(reminder_message_process( $change['reminder_message'], $change ))); ?></td>
                                                 <td class="center"><?php echo ($change['reminder_message_private'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
                                                 <td class="center"><?php echo $change['reminder_days']; ?></td>
                                                 <td class="center"><?php echo ($change['active'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>

@@ -97,89 +97,105 @@ $t_projects = project_cache_all();
                     <div class="widget-main no-padding">
                         <div class="table-responsive">
                             <table class="table table-bordered table-condensed table-striped">
-                                <tr>
-                                    <th class="category"><?php echo plugin_lang_get('project'); ?></th>
-                                    <td>
-                                        <select name="project_id" >
-                                            <option value="0"><?php echo plugin_lang_get('all_projects');?></option>
-                                            <?php foreach ($t_projects as $project): ?>
-                                            <option value="<?php echo $project['id']; ?>" <?php if ( $project['id'] == $change_datas['project_id'] ):?> selected="selected" <?php endif; ?>>
-                                                <?php echo $project['name']; ?>
-                                            </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="category"><?php echo plugin_lang_get('from_status'); ?></th>
-                                    <td>
-                                        <?php echo $function("from_status" , $change_datas['from_status']); ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="category"><?php echo plugin_lang_get('to_status'); ?></th>
-                                    <td>
-                                        <?php echo $function("to_status",$change_datas['to_status']); ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="category">
-                                        <?php echo plugin_lang_get('status_days'); ?>
-                                        <br>
-                                        <span class="small"><?php echo plugin_lang_get('status_days_description'); ?></span>
-                                    </th>
-                                    <td>
-                                        <input type="text" class="center" name="status_days" size="3" maxlength="3" value="<?php echo $change_datas['status_days'];?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="category"><?php echo plugin_lang_get('reminder'); ?></th>
-                                    <td>
-                                        <select name="reminder" >
-                                            <option value="1"<?php if ( 1 == $change_datas['reminder'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('yes'); ?></option>
-                                            <option value="0"<?php if ( 0 == $change_datas['reminder'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('no'); ?></option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="category"><?php echo plugin_lang_get('reminder_message'); ?></th>
-                                    <td>
-                                        <textarea name="reminder_message" cols="60" rows="10"><?php echo isset($change_datas['reminder_message']) ? $change_datas['reminder_message']: plugin_lang_get('before_change_status_message');?></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="category"><?php echo plugin_lang_get('reminder_message_private'); ?></th>
-                                    <td>
-                                        <label for="reminder_message_private_off">
-                                            <input type="radio" class="ace" name="reminder_message_private" id="reminder_message_private_off" value="<?php echo OFF; ?>" <?php echo( ON != $change_datas['reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
-                                            <span class="lbl padding-6"><?php echo lang_get('public'); ?></span>
-                                        </label>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <label for="reminder_message_private_on">
-                                            <input type="radio" class="ace" name="reminder_message_private" id="reminder_message_private_on" value="<?php echo ON; ?>" <?php echo( ON == $change_datas['reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
-                                            <span class="lbl padding-6"><?php echo lang_get('private'); ?></span>
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="category">
-                                        <?php echo plugin_lang_get('reminder_days'); ?>
-                                        <br>
-                                        <span class="small"><?php echo plugin_lang_get('reminder_days_description'); ?></span>
-                                    </th>
-                                    <td>
-                                        <input type="text" class="center" name="reminder_days" size="3" maxlength="3" value="<?php echo $change_datas['reminder_days'];?>"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="category"><?php echo plugin_lang_get('active'); ?></th>
-                                    <td>
-                                        <select name="active" >
-                                            <option value="1" <?php if ( 1 == $change_datas['active'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('yes'); ?></option>
-                                            <option value="0" <?php if ( 0 == $change_datas['active'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('no'); ?></option>
-                                        </select>
-                                    </td>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <th class="category"><?php echo plugin_lang_get('project'); ?></th>
+                                        <td>
+                                            <select name="project_id" >
+                                                <option value="0"><?php echo plugin_lang_get('all_projects');?></option>
+                                                <?php foreach ($t_projects as $project): ?>
+                                                <option value="<?php echo $project['id']; ?>" <?php if ( $project['id'] == $change_datas['project_id'] ):?> selected="selected" <?php endif; ?>>
+                                                    <?php echo $project['name']; ?>
+                                                </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="spacer"></tr>
+                                    <tr>
+                                        <th class="category"><?php echo plugin_lang_get('from_status'); ?></th>
+                                        <td>
+                                            <?php echo $function("from_status" , $change_datas['from_status']); ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="category"><?php echo plugin_lang_get('to_status'); ?></th>
+                                        <td>
+                                            <?php echo $function("to_status",$change_datas['to_status']); ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="category">
+                                            <?php echo plugin_lang_get('status_days'); ?>
+                                            <br>
+                                            <span class="small"><?php echo plugin_lang_get('status_days_description'); ?></span>
+                                        </th>
+                                        <td>
+                                            <input type="text" class="center" name="status_days" size="3" maxlength="3" value="<?php echo $change_datas['status_days'];?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="spacer"></tr>
+                                    <tr>
+                                        <th class="category"><?php echo plugin_lang_get('reminder'); ?></th>
+                                        <td>
+                                            <select name="reminder" >
+                                                <option value="1"<?php if ( 1 == $change_datas['reminder'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('yes'); ?></option>
+                                                <option value="0"<?php if ( 0 == $change_datas['reminder'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('no'); ?></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="category">
+                                            <?php echo plugin_lang_get('reminder_message'); ?>
+                                            <div class="small">
+                                                Les macros disponibles sont les suivantes :
+                                                <ul>
+                                                    <li><code>{from_status}</code> <?php echo htmlentities(plugin_lang_get('from_status')) ?></li>
+                                                    <li><code>{to_status}</code> <?php echo htmlentities(plugin_lang_get('to_status')) ?></li>
+                                                    <li><code>{status_days}</code> <?php echo htmlentities(plugin_lang_get('status_days')) ?></li>
+                                                    <li><code>{reminder_days}</code> <?php echo htmlentities(plugin_lang_get('reminder_days')) ?></li>
+                                                </ul>
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <textarea name="reminder_message" cols="60" rows="10"><?php echo isset($change_datas['reminder_message']) ? $change_datas['reminder_message']: plugin_lang_get('before_change_status_message');?></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="category"><?php echo plugin_lang_get('reminder_message_private'); ?></th>
+                                        <td>
+                                            <label for="reminder_message_private_off">
+                                                <input type="radio" class="ace" name="reminder_message_private" id="reminder_message_private_off" value="<?php echo OFF; ?>" <?php echo( ON != $change_datas['reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
+                                                <span class="lbl padding-6"><?php echo lang_get('public'); ?></span>
+                                            </label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label for="reminder_message_private_on">
+                                                <input type="radio" class="ace" name="reminder_message_private" id="reminder_message_private_on" value="<?php echo ON; ?>" <?php echo( ON == $change_datas['reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
+                                                <span class="lbl padding-6"><?php echo lang_get('private'); ?></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="category">
+                                            <?php echo plugin_lang_get('reminder_days'); ?>
+                                            <br>
+                                            <span class="small"><?php echo plugin_lang_get('reminder_days_description'); ?></span>
+                                        </th>
+                                        <td>
+                                            <input type="text" class="center" name="reminder_days" size="3" maxlength="3" value="<?php echo $change_datas['reminder_days'];?>"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="spacer"></tr>
+                                    <tr>
+                                        <th class="category"><?php echo plugin_lang_get('active'); ?></th>
+                                        <td>
+                                            <select name="active" >
+                                                <option value="1" <?php if ( 1 == $change_datas['active'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('yes'); ?></option>
+                                                <option value="0" <?php if ( 0 == $change_datas['active'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('no'); ?></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>

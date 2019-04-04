@@ -80,3 +80,31 @@ function get_status_option_list_plugin( $p_user_auth = 0, $p_current_value = 0, 
 
 	return $t_enum_list;
 }
+
+#Retourne le message avec les remplacements des macros en bonne et due forme
+function reminder_message_process( $p_message, $p_change = array() )
+{
+	global $t_status_names;
+	$status_names = $t_status_names;
+	$message = $p_message;
+	$replace = '';
+	if( empty($status_names) )
+	{
+		$status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_enum_string' ) );
+	}
+	foreach( $p_change as $key => $val )
+	{
+		$replace = $p_change[ $key ];
+		if( 'from_status' == $key || 'to_status' == $key )
+		{
+			$replace = $status_names[$replace];
+		}
+		elseif( 'status_days' == $key )
+		{
+			$replace = ($p_change['status_days'] - $p_change['reminder_days']);
+		}
+		$message = str_replace( '{'.$key.'}', $replace, $message );
+	}
+
+	return $message;
+}
