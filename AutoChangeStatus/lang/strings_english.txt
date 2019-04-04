@@ -15,9 +15,14 @@ $s_plugin_AutoChangeStatus_project = 'Project Name';
 $s_plugin_AutoChangeStatus_from_status = 'From Status';
 $s_plugin_AutoChangeStatus_to_status = 'To Status';
 $s_plugin_AutoChangeStatus_status_days = 'Number of days';
+$s_plugin_AutoChangeStatus_status_days_description = 'Number of days before automatic status modification, if no changes.';
 $s_plugin_AutoChangeStatus_reminder = 'Reminder';
 $s_plugin_AutoChangeStatus_reminder_message = 'Reminder Message';
+$s_plugin_AutoChangeStatus_reminder_message_description = 'Available tokens:';
+$s_plugin_AutoChangeStatus_reminder_message_private = 'Reminder note visibility';
+$s_plugin_AutoChangeStatus_reminder_message_private_short = 'Private note';
 $s_plugin_AutoChangeStatus_reminder_days = 'Number of days';
+$s_plugin_AutoChangeStatus_reminder_days_description = 'Number of days before adding of a note, if no changes.';
 $s_plugin_AutoChangeStatus_active = 'Active';
 $s_plugin_AutoChangeStatus_edit = 'Edit';
 $s_plugin_AutoChangeStatus_no_update_changes_created = 'No change updates created';
@@ -28,7 +33,13 @@ $s_plugin_AutoChangeStatus_create_new_change_description = ' Add new status chan
 $s_plugin_AutoChangeStatus_all_projects = 'All projects';
 $s_plugin_AutoChangeStatus_yes = 'Yes';
 $s_plugin_AutoChangeStatus_no = 'No';
-$s_plugin_AutoChangeStatus_create_change = 'Create';
+$s_plugin_AutoChangeStatus_create = 'Create';
+$s_plugin_AutoChangeStatus_change = 'Save modifications';
+$s_plugin_AutoChangeStatus_delete = 'Delete';
 $s_plugin_AutoChangeStatus_before_change_status_message = "Hello,\n\nThis bug is in status '%s' since %d days.\n\nWithout any return from you its status will change to '%s' in %d days \n\n\nautomatic message";
 $s_plugin_AutoChangeStatus_change_status_message = "Automatic status change \no customer return since %d days";
- 
+$s_plugin_AutoChangeStatus_back = "Back";
+
+#Delete a change status rule
+$s_plugin_AutoChangeStatus_ensure_delete = 'Do you really want to delete this automatic status change rule?';
+$s_plugin_AutoChangeStatus_delete_changestatus = 'Delete automatic status change rule';
