@@ -18,8 +18,6 @@
 #  © Hennes Hervé <contact@h-hennes.fr>
 #    2015-2016
 #  http://www.h-hennes.fr/blog/
-
-require_once( dirname(__FILE__) . '/../../../core.php' );
 require_once(dirname(__FILE__).'/functions.php');
 
 #En cron on push le nom du module
@@ -145,4 +143,3 @@ while ($change = db_fetch_array($change_status)) {
         }
      }
 }
-
