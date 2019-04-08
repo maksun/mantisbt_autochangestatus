@@ -19,6 +19,8 @@
 #    2015-2016
 #  http://www.h-hennes.fr/blog/
 
+form_security_validate( 'plugin_AutoChangeStatus_config_edit' );
+
 auth_reauthenticate( );
 access_ensure_global_level( config_get( 'manage_plugin_threshold' ) );
 
