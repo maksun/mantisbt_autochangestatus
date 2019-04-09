@@ -26,7 +26,7 @@ class AutoChangeStatusPlugin extends MantisPlugin
         $this->name =  plugin_lang_get('plugin_title');
         $this->description = plugin_lang_get('plugin_description');
         $this->page = 'config.php';
-        $this->version = '2.0.0';
+        $this->version = '2.0.1';
         $this->requires = array(
             'MantisCore' => '2.0.0',
         );

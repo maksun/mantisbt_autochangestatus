@@ -1,9 +1,11 @@
 Module AutoChangeStatus
 
-Changement automatique du statuts des bugs après une durée définie.
+Changement automatique du statut des bugs après une durée définie, avec option d'envoi d'un message de rappel quelques jours avant.
 
-2015-08-19 : V 0.1.0 : Version initiale du module
-2015-08-20 : V 0.1.1 : Correctif affichage workflow avec configuration personnalisée / Optimisations traductions
-2015-08-26 : V 0.1.2 : Correctif si pas de projet spécifique choisi
-2016-01-07 : V 0.1.3 : Correctif user cron 
+2019-04-08 : V 2.0.1 : Le changement auto maintenant facultatif grâce à "actif" oui/non. Le rappel s'enverra s'il est à "oui".
+2019-04-08 : V 2.0.0 : Compatibilité mantis 2.x et améliorations des notes de rappel
 2016-07-26 : V 0.1.4 : Compatibilité mantis 1.3
+2016-01-07 : V 0.1.3 : Correctif user cron
+2015-08-26 : V 0.1.2 : Correctif si pas de projet spécifique choisi
+2015-08-20 : V 0.1.1 : Correctif affichage workflow avec configuration personnalisée / Optimisations traductions
+2015-08-19 : V 0.1.0 : Version initiale du module
