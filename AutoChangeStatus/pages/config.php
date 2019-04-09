@@ -110,13 +110,13 @@ require_once(dirname(__FILE__).'/functions.php');
                                         <th class="column-edit"> &nbsp; </th>
                                         <th><?php echo plugin_lang_get('project'); ?></th>
                                         <th><?php echo plugin_lang_get('from_status'); ?></th>
-                                        <th><?php echo plugin_lang_get('to_status'); ?></th>
-                                        <th><?php echo plugin_lang_get('status_days'); ?></th>
-                                        <th><?php echo plugin_lang_get('reminder'); ?></th>
-                                        <th><?php echo plugin_lang_get('reminder_message'); ?></th>
-                                        <th><?php echo plugin_lang_get('reminder_message_private_short'); ?></th>
-                                        <th><?php echo plugin_lang_get('reminder_days'); ?></th>
                                         <th><?php echo plugin_lang_get('active'); ?></th>
+                                        <th><?php echo plugin_lang_get('status_days'); ?></th>
+                                        <th><?php echo plugin_lang_get('to_status'); ?></th>
+                                        <th><?php echo plugin_lang_get('reminder'); ?></th>
+                                        <th><?php echo plugin_lang_get('reminder_days'); ?></th>
+                                        <th><?php echo plugin_lang_get('reminder_message_private_short'); ?></th>
+                                        <th><?php echo plugin_lang_get('reminder_message'); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -128,15 +128,55 @@ require_once(dirname(__FILE__).'/functions.php');
                                                         <i class="fa fa-pencil bigger-130 padding-2 grey" title="<?php echo plugin_lang_get('edit'); ?>"></i>
                                                     </a>
                                                 </td>
-                                                <td><?php echo htmlentities($change['project_name']); ?></td>
-                                                <td><?php echo htmlentities($t_status_names[$change['from_status']]); ?></td>
-                                                <td><?php echo htmlentities($t_status_names[$change['to_status']]); ?></td>
-                                                <td class="center"><?php echo $change['status_days']; ?></td>
-                                                <td class="center"><?php echo ($change['reminder'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
-                                                <td><?php echo nl2br(htmlentities(reminder_message_process( $change['reminder_message'], $change ))); ?></td>
-                                                <td class="center"><?php echo ($change['reminder_message_private'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
-                                                <td class="center"><?php echo $change['reminder_days']; ?></td>
-                                                <td class="center"><?php echo ($change['active'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
+                                                <td>
+                                                    <?php
+                                                        if( !empty( $change['project_name'] ) ) {
+                                                            echo htmlentities($change['project_name']);
+                                                        }
+                                                        else
+                                                        {
+                                                            echo htmlentities(plugin_lang_get('all_projects'));
+                                                        }
+                                                    ?>
+
+                                                </td>
+                                                <td class="column-status">
+                                                    <div class="align-left">
+                                                        <?php
+                                                        $status_label = html_get_status_css_class( $change['from_status'] );
+                                                        echo '<i class="fa fa-square fa-status-box ' . $status_label . '"></i> ';
+                                                        echo htmlentities($t_status_names[$change['from_status']]);
+                                                        ?>
+                                                    </div>
+                                                </td>
+                                                <?php if( $change['active'] == 1 ): ?>
+                                                    <td class="center"><?php echo htmlentities(plugin_lang_get('yes')); ?></td>
+                                                    <td class="center"><?php echo $change['status_days']; ?></td>
+                                                    <td class="column-status">
+                                                        <div class="align-left">
+                                                            <?php
+                                                            $status_label = html_get_status_css_class( $change['to_status'] );
+                                                            echo '<i class="fa fa-square fa-status-box ' . $status_label . '"></i> ';
+                                                            echo htmlentities($t_status_names[$change['to_status']]);
+                                                            ?>
+                                                        </div>
+                                                    </td>
+                                                <?php else: ?>
+                                                    <td class="center"><?php echo htmlentities(plugin_lang_get('no')); ?></td>
+                                                    <td class="center">&ndash;</td>
+                                                    <td class="center">&ndash;</td>
+                                                <?php endif; ?>
+                                                <?php if( $change['reminder'] == 1 ): ?>
+                                                    <td class="center"><?php echo htmlentities(plugin_lang_get('yes')); ?></td>
+                                                    <td class="center"><?php echo $change['reminder_days']; ?></td>
+                                                    <td class="center"><?php echo ($change['reminder_message_private'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
+                                                    <td><?php echo nl2br(htmlentities(reminder_message_process( $change['reminder_message'], $change ))); ?></td>
+                                                <?php else: ?>
+                                                    <td class="center"><?php echo htmlentities(plugin_lang_get('no')); ?></td>
+                                                    <td class="center">&ndash;</td>
+                                                    <td class="center">&ndash;</td>
+                                                    <td class="center">&ndash;</td>
+                                                <?php endif; ?>
                                             </tr>
                                         <?php endwhile; ?>
                                     <?php else: ?>
