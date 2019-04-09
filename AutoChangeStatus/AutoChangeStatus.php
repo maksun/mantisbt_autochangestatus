@@ -16,7 +16,7 @@
 #
 #  Autochange status Plugin for Mantis BugTracker :
 #  © Hennes Hervé <contact@h-hennes.fr>
-#    2015-2016
+#    2015-2019
 #  http://www.h-hennes.fr/blog/
 
 class AutoChangeStatusPlugin extends MantisPlugin
@@ -31,7 +31,7 @@ class AutoChangeStatusPlugin extends MantisPlugin
             'MantisCore' => '2.0.0',
         );
         $this->author = 'Hennes Hervé';
-        $this->url = 'http://www.h-hennes.fr';
+        $this->url = 'http://www.h-hennes.fr/blog';
     }
 
     /**

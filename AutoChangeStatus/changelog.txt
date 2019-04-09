@@ -2,11 +2,11 @@ Module AutoChangeStatus
 
 Changement automatique du statut des bugs après une durée définie, avec option d'envoi d'un message de rappel quelques jours avant.
 
-2019-04-09 : V 2.0.1
+2019-04-09 : V 2.0.1 (par Adysone)
  - Le changement auto maintenant facultatif grâce à "actif" oui/non.
  - Le rappel s'enverra s'il est à "oui".
  - Amélioration de l'UI : masque les options qui ne sont pas activées
-2019-04-08 : V 2.0.0
+2019-04-08 : V 2.0.0 (par Adysone)
  - Compatibilité mantis 2.x et améliorations des notes de rappel
 2016-07-26 : V 0.1.4
  - Compatibilité mantis 1.3
