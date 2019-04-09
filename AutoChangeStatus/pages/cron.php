@@ -16,7 +16,7 @@
 #
 #  Autochange status Plugin for Mantis BugTracker :
 #  © Hennes Hervé <contact@h-hennes.fr>
-#    2015-2016
+#    2015-2019
 #  http://www.h-hennes.fr/blog/
 require_once(dirname(__FILE__).'/functions.php');
 
