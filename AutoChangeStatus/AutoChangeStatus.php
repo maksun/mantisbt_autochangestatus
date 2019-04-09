@@ -44,6 +44,12 @@ class AutoChangeStatusPlugin extends MantisPlugin
         );
     }
 
+    function hooks() {
+    	return array(
+    		'EVENT_LAYOUT_RESOURCES' => 'resources',
+    	);
+    }
+
     /**
      * Installation du plugin
      */
@@ -70,6 +76,15 @@ class AutoChangeStatusPlugin extends MantisPlugin
      */
     public function uninstall(){
         return db_query("DROP TABLE {plugin_autochangestatus}");
+    }
+
+    /**
+     * Inclut le fichier javascript pour l'UI
+     */
+    function resources() {
+    	if( gpc_get_string( 'page', '' ) === 'AutoChangeStatus/changestatus' ) {
+	   		echo '<script src="' . plugin_file("AutoChangeStatus.js") . '"></script>';
+	   	}
     }
 
 }
