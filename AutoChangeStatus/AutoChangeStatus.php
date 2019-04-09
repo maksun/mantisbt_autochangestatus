@@ -26,7 +26,7 @@ class AutoChangeStatusPlugin extends MantisPlugin
         $this->name =  plugin_lang_get('plugin_title');
         $this->description = plugin_lang_get('plugin_description');
         $this->page = 'config.php';
-        $this->version = '2.0.0';
+        $this->version = '2.0.1';
         $this->requires = array(
             'MantisCore' => '2.0.0',
         );
@@ -42,6 +42,12 @@ class AutoChangeStatusPlugin extends MantisPlugin
         return array(
             'change_status_user' => 'administrator',
         );
+    }
+
+    function hooks() {
+    	return array(
+    		'EVENT_LAYOUT_RESOURCES' => 'resources',
+    	);
     }
 
     /**
@@ -70,6 +76,15 @@ class AutoChangeStatusPlugin extends MantisPlugin
      */
     public function uninstall(){
         return db_query("DROP TABLE {plugin_autochangestatus}");
+    }
+
+    /**
+     * Inclut le fichier javascript pour l'UI
+     */
+    function resources() {
+    	if( gpc_get_string( 'page', '' ) === 'AutoChangeStatus/changestatus' ) {
+	   		echo '<script src="' . plugin_file("AutoChangeStatus.js") . '"></script>';
+	   	}
     }
 
 }

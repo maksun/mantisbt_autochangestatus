@@ -49,7 +49,7 @@ $t_status_names = MantisEnum::getAssocArrayIndexedByValues( lang_get( 'status_en
         " AND date_submitted > ".db_param();
 
 #Récupération des changements automatiques qui sont actifs
-$change_status = db_query("SELECT * FROM {plugin_autochangestatus} WHERE active=1");
+$change_status = db_query("SELECT * FROM {plugin_autochangestatus} WHERE active=1 OR reminder=1");
 #Boucle de traitement
 while ($change = db_fetch_array($change_status)) {
 
@@ -105,17 +105,17 @@ while ($change = db_fetch_array($change_status)) {
 ####
 # 2ème étape : Changement automatique des statuts
 ###
+    if ($change['active'] == 1) {
+    	if ( $change['project_id'] != 0 ) {
+            $t_bug_status_pool = db_query_bound($sql_status,
+                array($change['from_status'], $change['from_status'], $change['project_id'],
+                $change['status_days']));
+    	} else {
+    	    $t_bug_status_pool = db_query_bound($sql_status_no_project,
+                array($change['from_status'], $change['from_status'],$change['status_days']));
+    	}
 
-	if ( $change['project_id'] != 0 ) {
-        $t_bug_status_pool = db_query_bound($sql_status,
-            array($change['from_status'], $change['from_status'], $change['project_id'],
-            $change['status_days']));
-	} else {
-	    $t_bug_status_pool = db_query_bound($sql_status_no_project,
-            array($change['from_status'], $change['from_status'],$change['status_days']));
-	}
-
-     while ($t_bug_status = db_fetch_array($t_bug_status_pool)) {
+         while ($t_bug_status = db_fetch_array($t_bug_status_pool)) {
 
             #On regarde si ces bugs ont été commenté dans la période
             $t_user_notes_status = db_query_bound($sql_notes,
@@ -140,6 +140,7 @@ while ($change = db_fetch_array($change_status)) {
                 $t_bug_model = bug_get($t_bug_status['bug_id']);
                 $t_bug_model->status = $change['to_status'];
                 $t_bug_model->update();
+            }
         }
-     }
+    }
 }
