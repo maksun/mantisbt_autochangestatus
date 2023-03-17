@@ -106,41 +106,47 @@ while ($change = db_fetch_array($change_status)) {
 # 2ème étape : Changement automatique des statuts
 ###
     if ($change['active'] == 1) {
-    	if ( $change['project_id'] != 0 ) {
+        if ( $change['project_id'] != 0 ) {
             $t_bug_status_pool = db_query_bound($sql_status,
                 array($change['from_status'], $change['from_status'], $change['project_id'],
                 $change['status_days']));
-    	} else {
-    	    $t_bug_status_pool = db_query_bound($sql_status_no_project,
+        } else {
+            $t_bug_status_pool = db_query_bound($sql_status_no_project,
                 array($change['from_status'], $change['from_status'],$change['status_days']));
-    	}
+        }
 
          while ($t_bug_status = db_fetch_array($t_bug_status_pool)) {
 
             #On regarde si ces bugs ont été commenté dans la période
             $t_user_notes_status = db_query_bound($sql_notes,
-                array($t_bug_status['bug_id'], $g_cron_current_user_id, $t_bug_status['date_modif']));
+                array($t_bug_status['bug_id'], $g_cron_current_user_id, $t_bug_status['date_modified']));
 
-            #Si pas de notes on en rajoute une
+          #Si pas de notes on en rajoute une
+          if ($change['last_reminder'] == 1) {
             if (db_num_rows($t_user_notes_status) < 1) {
-
-                #Rajout d'une note informative
-                $t_bugnote_text_status = sprintf(plugin_lang_get('change_status_message'),$t_status_names[$change['to_status']],$change['status_days']);
+                if($change['last_reminder_message'] === plugin_lang_get('change_status_message'))
+                {
+                    $t_bugnote_text_status = sprintf(plugin_lang_get('change_status_message'),$t_status_names[$change['to_status']],$change['status_days']);
+                }
+                else
+                {
+                    $t_bugnote_text_status = reminder_message_process($change['last_reminder_message'], $change);
+                }
                 bugnote_add(
                     $t_bug_status['bug_id'],
                     $t_bugnote_text_status,
                     '',
-                    (ON == $change['reminder_message_private']),
+                    (ON == $change['last_reminder_message_private']),
                     BUGNOTE,
                     '',
                     $g_cron_current_user_id
                 );
-
+            }
+        }
                 #Changement du status du bug
                 $t_bug_model = bug_get($t_bug_status['bug_id']);
                 $t_bug_model->status = $change['to_status'];
                 $t_bug_model->update();
-            }
         }
     }
 }
