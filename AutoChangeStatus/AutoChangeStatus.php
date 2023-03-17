@@ -26,7 +26,7 @@ class AutoChangeStatusPlugin extends MantisPlugin
         $this->name =  plugin_lang_get('plugin_title');
         $this->description = plugin_lang_get('plugin_description');
         $this->page = 'config.php';
-        $this->version = '2.0.1';
+        $this->version = '2.1.0';
         $this->requires = array(
             'MantisCore' => '2.0.0',
         );
@@ -62,8 +62,11 @@ class AutoChangeStatusPlugin extends MantisPlugin
                         `to_status` int(3) NOT NULL,
                         `status_days` int(3) NOT NULL,
                         `reminder` tinyint(1) NOT NULL,
+                        `last_reminder` tinyint(1) NOT NULL,
                         `reminder_message` text,
+                        `last_reminder_message` text,
                         `reminder_message_private` tinyint(1) NOT NULL,
+                        `last_reminder_message_private` tinyint(1) NOT NULL,
                         `reminder_days` int(11) NOT NULL,
                         `active` tinyint(1) NOT NULL,
                         PRIMARY KEY (`changestatus_id`)
