@@ -117,6 +117,9 @@ require_once(dirname(__FILE__).'/functions.php');
                                         <th><?php echo plugin_lang_get('reminder_days'); ?></th>
                                         <th><?php echo plugin_lang_get('reminder_message_private_short'); ?></th>
                                         <th><?php echo plugin_lang_get('reminder_message'); ?></th>
+                                        <th><?php echo plugin_lang_get('last_reminder'); ?></th>
+                                        <th><?php echo plugin_lang_get('last_reminder_message_private_short'); ?></th>
+                                        <th><?php echo plugin_lang_get('last_reminder_message'); ?></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -177,6 +180,15 @@ require_once(dirname(__FILE__).'/functions.php');
                                                     <td class="center">&ndash;</td>
                                                     <td class="center">&ndash;</td>
                                                 <?php endif; ?>
+                                                <?php if( $change['last_reminder'] == 1 ): ?>
+                                                    <td class="center"><?php echo htmlentities(plugin_lang_get('yes')); ?></td>
+                                                    <td class="center"><?php echo ($change['last_reminder_message_private'] == 1 ) ? plugin_lang_get('yes') : plugin_lang_get('no'); ?></td>
+                                                    <td><?php echo nl2br(htmlentities(reminder_message_process( $change['last_reminder_message'], $change ))); ?></td>
+                                                <?php else: ?>
+                                                    <td class="center"><?php echo htmlentities(plugin_lang_get('no')); ?></td>
+                                                    <td class="center">&ndash;</td>
+                                                    <td class="center">&ndash;</td>
+                                                <?php endif; ?>	
                                             </tr>
                                         <?php endwhile; ?>
                                     <?php else: ?>
