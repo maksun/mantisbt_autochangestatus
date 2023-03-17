@@ -40,13 +40,13 @@ print_manage_menu();
 if ( gpc_get('submitCreate',false)) {
     form_security_validate( 'plugin_AutoChangeStatus_changestatus_edit' );
     $query = "INSERT INTO {plugin_autochangestatus}
-        (`project_id`,`from_status`,`to_status`,`status_days`,`reminder`,`reminder_message`,`reminder_message_private`,`reminder_days`,`active`)
-        VALUES ( ".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().")";
+        (`project_id`,`from_status`,`to_status`,`status_days`,`reminder`,`last_reminder`,`reminder_message`,`last_reminder_message`,`reminder_message_private`,`last_reminder_message_private`,`reminder_days`,`active`)
+        VALUES ( ".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().",".db_param().")";
 
     db_query_bound($query,
         array(gpc_get_int('project_id'), gpc_get_int('from_status'), gpc_get_int('to_status'),
-        gpc_get_int('status_days'), gpc_get_int('reminder'),
-        gpc_get_string('reminder_message'),gpc_get_int('reminder_message_private'),gpc_get_int('reminder_days'), gpc_get_int('active'))
+        gpc_get_int('status_days'), gpc_get_int('reminder'), gpc_get_int('last_reminder'),
+        gpc_get_string('reminder_message'), gpc_get_string('last_reminder_message'), gpc_get_int('reminder_message_private'), gpc_get_int('last_reminder_message_private'), gpc_get_int('reminder_days'), gpc_get_int('active'))
     );
 
     print_successful_redirect( plugin_page( 'config', true ) );
@@ -57,13 +57,13 @@ if ( gpc_get('submitCreate',false)) {
 if ( gpc_get('submitEdit',false)) {
     form_security_validate( 'plugin_AutoChangeStatus_changestatus_edit' );
     $query = "UPDATE {plugin_autochangestatus} "
-        . "SET `project_id` =".db_param().",`from_status`=".db_param().",`to_status`=".db_param().",`status_days`=".db_param().",`reminder`=".db_param().",`reminder_message`=".db_param().",`reminder_message_private`=".db_param().",`reminder_days`=".db_param().",`active`=".db_param().""
+        . "SET `project_id` =".db_param().",`from_status`=".db_param().",`to_status`=".db_param().",`status_days`=".db_param().",`reminder`=".db_param().",`last_reminder`=".db_param().",`reminder_message`=".db_param().",`last_reminder_message`=".db_param().",`reminder_message_private`=".db_param().",`last_reminder_message_private`=".db_param().",`reminder_days`=".db_param().",`active`=".db_param().""
         ." WHERE changestatus_id=".db_param();
 
     db_query_bound($query,
         array(gpc_get_int('project_id'), gpc_get_int('from_status'), gpc_get_int('to_status'),
-        gpc_get_int('status_days'), gpc_get_int('reminder'),
-        gpc_get_string('reminder_message'),gpc_get_int('reminder_message_private'),gpc_get_int('reminder_days'), gpc_get_int('active'),gpc_get_int('changestatus_id'))
+        gpc_get_int('status_days'), gpc_get_int('reminder'), gpc_get_int('last_reminder'),
+        gpc_get_string('reminder_message'), gpc_get_string('last_reminder_message'), gpc_get_int('reminder_message_private'), gpc_get_int('last_reminder_message_private'), gpc_get_int('reminder_days'), gpc_get_int('active'),gpc_get_int('changestatus_id'))
     );
 
     print_successful_redirect( plugin_page( 'config', true ) );
@@ -196,6 +196,48 @@ $t_projects = project_cache_all();
                                         <th class="category"><?php echo plugin_lang_get('to_status'); ?></th>
                                         <td>
                                             <?php echo $function("to_status",isset($change_datas['to_status']) ? $change_datas['to_status'] : 0); ?>
+                                        </td>
+                                    </tr>
+				    <tr>
+                                        <th class="category"><?php echo plugin_lang_get('last_reminder'); ?></th>
+                                        <td>
+                                            <select name="last_reminder"
+                                                id="acs-reminder"
+                                            >
+                                                <option value="1"<?php if ( isset($change_datas['last_reminder']) && 1 == $change_datas['last_reminder'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('yes'); ?></option>
+                                                <option value="0"<?php if ( isset($change_datas['last_reminder']) && 0 == $change_datas['last_reminder'] ):?> selected="selected" <?php endif; ?>><?php echo plugin_lang_get('no'); ?></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="visible-reminder">
+                                        <th class="category"><?php echo plugin_lang_get('last_reminder_message_private'); ?></th>
+                                        <td>
+                                            <label for="last_reminder_message_private_off">
+                                                <input type="radio" class="ace" name="last_reminder_message_private" id="last_reminder_message_private_off" value="<?php echo OFF; ?>" <?php echo( isset($change_datas['last_reminder_message_private']) && ON != $change_datas['last_reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
+                                                <span class="lbl padding-6"><?php echo lang_get('public'); ?></span>
+                                            </label>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <label for="last_reminder_message_private_on">
+                                                <input type="radio" class="ace" name="last_reminder_message_private" id="last_reminder_message_private_on" value="<?php echo ON; ?>" <?php echo( isset($change_datas['last_reminder_message_private']) && ON == $change_datas['last_reminder_message_private'] ) ? 'checked="checked" ' : ''?>/>
+                                                <span class="lbl padding-6"><?php echo lang_get('private'); ?></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                   <tr class="visible-reminder">
+                                        <th class="category">
+                                            <?php echo plugin_lang_get('last_reminder_message'); ?>
+                                            <div class="small">
+                                                Les macros disponibles sont les suivantes :
+                                                <ul>
+                                                    <li><code>{from_status}</code> <?php echo htmlentities(plugin_lang_get('from_status')) ?></li>
+                                                    <li><code>{to_status}</code> <?php echo htmlentities(plugin_lang_get('to_status')) ?></li>
+                                                    <li><code>{status_days}</code> <?php echo htmlentities(plugin_lang_get('status_days')) ?></li>
+                                                    <li><code>{reminder_days}</code> <?php echo htmlentities(plugin_lang_get('reminder_days')) ?></li>
+                                                </ul>
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <textarea name="last_reminder_message" cols="60" rows="10"><?php echo isset($change_datas['last_reminder_message']) ? $change_datas['last_reminder_message']: plugin_lang_get('change_status_message');?></textarea>
                                         </td>
                                     </tr>
                                 </tbody>
